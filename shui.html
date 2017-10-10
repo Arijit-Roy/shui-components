@@ -1,0 +1,66 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.7/webcomponents-loader.js"></script>
+<link rel="import" href="https://polygit.org/polymer+:2.0-preview/webcomponentsjs+:v1/shadydom+webcomponents+:master/shadycss+webcomponents+:master/custom-elements+webcomponents+:master/components/polymer/polymer-element.html">
+<link rel="import" href="shui-checkout-css.html">
+<dom-module id="shui-check-box">
+
+  <template>
+  	<style include="shui-checkout-css">
+  	:host {
+      display: block;
+    }
+  	</style>
+  	<div class$="{{classes(dataLabel, dataScheme, dataDisabled)}}">
+			<input type="checkbox" name={{dataName}} id ={{dataName}} disabled={{dataDisabled}} >
+			<label class = "red" for$=[[dataName]]>{{dataLabel}}</label>
+		</div>
+  </template>
+
+  <script>
+	class CustomElement extends Polymer.Element {
+	  static get is() {
+			return "shui-check-box";
+	  }
+	  static get properties() {
+			return {
+				dataScheme: {
+					type: String,
+				},
+			  dataId: {
+					type: String,
+			  },
+			  dataDisabled: {
+					type: Boolean,
+			  },
+			  dataLabel: {
+					type: String,
+			  },
+			  dataName: {
+					type: String,
+			  }
+			}
+	  }
+	  classes(label, scheme, disabled){
+	  	const IS_TOUCH_DEVICE = 'ontouchstart' in document.documentElement;
+
+      var class_str = " " + "SHCheckbox";
+      class_str += " " + `SHCheckbox--${scheme}Scheme`;
+
+      if(IS_TOUCH_DEVICE){
+      	class_str += " " + "SHCheckbox--touch";
+      }
+
+      if(label && label.length > 0){
+      	class_str += " " + "SHCheckbox--withLabel";
+      }
+      if(disabled){
+      	class_str += " " + "SHCheckbox--disabled";
+      }
+
+      return class_str;
+
+	  }
+	}
+	window.customElements.define(CustomElement.is, CustomElement);
+  </script>
+
+</dom-module>
